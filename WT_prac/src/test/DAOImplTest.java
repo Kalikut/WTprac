@@ -405,4 +405,216 @@ public class DAOImplTest {
         };
     }
 
+    @Test(dataProvider = "complexTestData")
+    public void complexTest() throws SQLException {
+
+        OrderJournalDAO oj = new OrderJournalDAOImpl();
+        OrderDAO od = new OrderDAOImpl();
+        BookDAO bk = new BookDAOImpl();
+        AuthorDAO at = new AuthorDAOImpl();
+        ClientDAO cn = new ClientDAOImpl();
+        CoverDAO cv = new CoverDAOImpl();
+        GenreDAO gn = new GenreDAOImpl();
+        StatusDAO ss = new StatusDAOImpl();
+
+        Collection authors = at.getAllAuthors();
+        Iterator iterator = authors.iterator();
+        while (iterator.hasNext()) {
+            Author cur_author = (Author) iterator.next();
+            at.deleteAuthor(cur_author);
+        }
+        Collection clients = cn.getAllClients();
+        iterator = clients.iterator();
+        while (iterator.hasNext()) {
+            Client cur_client = (Client) iterator.next();
+            cn.deleteClient(cur_client);
+        }
+        Collection books = bk.getAllBooks();
+        iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book cur_book = (Book) iterator.next();
+            bk.deleteBook(cur_book);
+        }
+        Collection covers = cv.getAllCovers();
+        iterator = covers.iterator();
+        while (iterator.hasNext()) {
+            Cover cur_cover = (Cover) iterator.next();
+            cv.deleteCover(cur_cover);
+        }
+        Collection genres = gn.getAllGenres();
+        iterator = genres.iterator();
+        while (iterator.hasNext()) {
+            Genre cur_genre = (Genre) iterator.next();
+            gn.deleteGenre(cur_genre);
+        }
+
+        Author author = new Author();
+        author.setName("A. Strugatsky");
+        at.addAuthor(author);
+        author = new Author();
+        author.setName("B. Strugatsky");
+        at.addAuthor(author);
+        author = new Author();
+        author.setName("L.N. Tolstoy");
+        at.addAuthor(author);
+
+        Genre genre = new Genre();
+        genre.setGenre_name("Fantastic novel");
+        gn.addGenre(genre);
+        genre = new Genre();
+        genre.setGenre_name("Science fiction novel");
+        gn.addGenre(genre);
+        genre = new Genre();
+        genre.setGenre_name("Romance epic");
+        gn.addGenre(genre);
+
+        Cover cover = new Cover();
+        cover.setCover_view("Soft");
+        cv.addCover(cover);
+        cover = new Cover();
+        cover.setCover_view("Hard");
+        cv.addCover(cover);
+
+        Book book = new Book();
+        book.setTitle("Its hard to be a god");
+        book.setGenre_id(1);
+        book.setPublishing_house("Publishing house AST");
+        book.setPublishing_year(2016);
+        book.setPages_number(256);
+        book.setAmount(31);
+        book.setPrice(250);
+        book.setCover_id(1);
+        book.addAuthor(at.getAuthorById(1));
+        book.addAuthor(at.getAuthorById(2));
+        bk.addBook(book);
+        book = new Book();
+        book.setTitle("Roadside Picnic");
+        book.setGenre_id(1);
+        book.setPublishing_house("Publishing house AST");
+        book.setPublishing_year(2016);
+        book.setPages_number(318);
+        book.setAmount(33);
+        book.setPrice(300);
+        book.setCover_id(1);
+        book.addAuthor(at.getAuthorById(1));
+        book.addAuthor(at.getAuthorById(2));
+        bk.addBook(book);
+        book = new Book();
+        book.setTitle("Guy from the Underworld");
+        book.setGenre_id(1);
+        book.setPublishing_house("Publishing house AST");
+        book.setPublishing_year(2016);
+        book.setPages_number(192);
+        book.setAmount(41);
+        book.setPrice(200);
+        book.setCover_id(1);
+        book.addAuthor(at.getAuthorById(1));
+        book.addAuthor(at.getAuthorById(2));
+        bk.addBook(book);
+        book = new Book();
+        book.setTitle("Snail on the slope");
+        book.setGenre_id(2);
+        book.setPublishing_house("Publishing house AST");
+        book.setPublishing_year(2016);
+        book.setPages_number(320);
+        book.setAmount(37);
+        book.setPrice(300);
+        book.setCover_id(1);
+        book.addAuthor(at.getAuthorById(1));
+        book.addAuthor(at.getAuthorById(2));
+        bk.addBook(book);
+        book = new Book();
+        book.setTitle("War and Peace.");
+        book.setGenre_id(3);
+        book.setPublishing_house("Publishing house AST");
+        book.setPublishing_year(2016);
+        book.setPages_number(1504);
+        book.setAmount(17);
+        book.setPrice(700);
+        book.setCover_id(2);
+        book.addAuthor(at.getAuthorById(3));
+        bk.addBook(book);
+
+        Client client = new Client();
+        client.setFirst_name("Ulyan");
+        client.setMiddle_name("Matveyevich");
+        client.setLast_name("Kondratev");
+        client.setAdress("460505, Yuryev-Polsky, ul. Vagonnikov 3-d, house 13, apartment 117");
+        client.setPhone_number("+79491251365");
+        client.setE_mail("KondratevUlyan228@gmail.com");
+        client.setPassword("5s48UB3wuXQy");
+        cn.addClient(client);
+        client = new Client();
+        client.setFirst_name("Galya");
+        client.setMiddle_name("Semyonovna");
+        client.setLast_name("Liutova");
+        client.setAdress("171366, city of Bondari, ul. Gvardeiskaya, house 57, apartment 150");
+        client.setPhone_number("+79601854913");
+        client.setE_mail("LyutovaGalya247@mail.ru");
+        client.setPassword("zL6lnLi3SBgY");
+        cn.addClient(client);
+
+        Order order = new Order();
+        order.setClient_id(1);
+        order.setOrder_date(new Date(117, 0, 27));
+        order.setDelivery_date(new Date(117,1,4));
+        order.setDelivery_adress("460505, Yuryev-Polsky, ul. Vagonnikov 3-d, house 13, apartment 117");
+        order.setDelivery_cost(300);
+        order.setStatus_id(4);
+        order.setBooks_cost(450);
+        od.addOrder(order);
+        order = new Order();
+        order.setClient_id(1);
+        order.setOrder_date(new Date(117, 0, 30));
+        order.setDelivery_date(new Date(117,1,12));
+        order.setDelivery_adress("460505, Yuryev-Polsky, ul. Vagonnikov 3-d, house 13, apartment 117");
+        order.setDelivery_cost(300);
+        order.setStatus_id(2);
+        order.setBooks_cost(700);
+        od.addOrder(order);
+        order = new Order();
+        order.setClient_id(2);
+        order.setOrder_date(new Date(117, 0, 24));
+        order.setDelivery_date(new Date(117,1,5));
+        order.setDelivery_adress("171366, city of Bondari, ul. Gvardeiskaya, house 57, apartment 150");
+        order.setDelivery_cost(300);
+        order.setStatus_id(3);
+        order.setBooks_cost(600);
+        od.addOrder(order);
+
+        OrderJournal order_journal = new OrderJournal();
+        order_journal.setOrder_id(1);
+        order_journal.setBook_id(1);
+        order_journal.setAmount(1);
+        oj.addOrderJournal(order_journal);
+        order_journal = new OrderJournal();
+        order_journal.setOrder_id(1);
+        order_journal.setBook_id(3);
+        order_journal.setAmount(1);
+        oj.addOrderJournal(order_journal);
+        order_journal = new OrderJournal();
+        order_journal.setOrder_id(2);
+        order_journal.setBook_id(5);
+        order_journal.setAmount(1);
+        oj.addOrderJournal(order_journal);
+        order_journal = new OrderJournal();
+        order_journal.setOrder_id(3);
+        order_journal.setBook_id(2);
+        order_journal.setAmount(1);
+        oj.addOrderJournal(order_journal);
+        order_journal = new OrderJournal();
+        order_journal.setOrder_id(3);
+        order_journal.setBook_id(4);
+        order_journal.setAmount(1);
+        oj.addOrderJournal(order_journal);
+
+    }
+
+    @DataProvider
+    public Object[][] complexTestData() {
+        return new Object[][] {
+                new Object[] {}
+        };
+    }
+
 }

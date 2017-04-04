@@ -1,13 +1,16 @@
 package DAOImpl;
 
 import DAO.ClientDAO;
+import DAO.OrderDAO;
 import logic.Client;
 
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import logic.Order;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import util.HibernateUtil;
@@ -73,6 +76,14 @@ public class ClientDAOImpl implements ClientDAO {
     }
 
     public void deleteClient(Client client) throws SQLException {
+        OrderDAO od = new OrderDAOImpl();
+        Collection orders = od.getOrdersByClient(client);
+        Iterator iterator = orders.iterator();
+        while (iterator.hasNext()) {
+            Order cur_order = (Order) iterator.next();
+            client.removeOrder(cur_order);
+            od.deleteOrder(cur_order);
+        }
         Session session = null;
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
