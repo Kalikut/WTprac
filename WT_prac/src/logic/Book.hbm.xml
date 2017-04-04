@@ -1,0 +1,23 @@
+<hibernate-mapping>
+    <class name="logic.Book" table="book">
+        <id column="book_id" name="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property column="title" name="title" type="java.lang.String"/>
+        <property column="genre_id" name="genre_id" type="long"/>
+        <property column="publishing_house" name="publishing_house" type="java.lang.String"/>
+        <property column="publishing_year" name="publishing_year" type="int"/>
+        <property column="pages_number" name="pages_number" type="int"/>
+        <property column="amount" name="amount" type="long"/>
+        <property column="price" name="price" type="long"/>
+        <property column="cover_id" name="cover_id" type="long"/>
+        <set name="order_journal" lazy="false">
+            <key column="book_id"/>
+            <one-to-many class="logic.OrderJournal"/>
+        </set>
+        <set name="author" table="book_author" lazy="false">
+            <key column="book_id"/>
+            <many-to-many column="author_id" class="logic.Author"/>
+        </set>
+    </class>
+</hibernate-mapping>

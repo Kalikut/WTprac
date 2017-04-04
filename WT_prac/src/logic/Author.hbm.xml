@@ -1,0 +1,12 @@
+<hibernate-mapping>
+    <class name="logic.Author" table="author">
+        <id column="author_id" name="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property column="name" name="name" type="java.lang.String"/>
+        <set name="book" table="book_author" lazy="false">
+            <key column="author_id"/>
+            <many-to-many column="book_id" class="logic.Book"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,10 @@
+<hibernate-mapping>
+    <class name="logic.OrderJournal" table="orders_journal">
+        <id column="id" name="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property column="order_id" name="order_id" type="long"/>
+        <property column="book_id" name="book_id" type="long"/>
+        <property column="amount" name="amount" type="long"/>
+    </class>
+</hibernate-mapping>

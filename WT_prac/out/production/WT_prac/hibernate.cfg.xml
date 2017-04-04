@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/internet_shop</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">15wa11re19or96</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="show_sql">true</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="connection.pool_size">20</property>
+
+        <mapping resource="logic/Admin.hbm.xml"/>
+        <mapping resource="logic/Author.hbm.xml"/>
+        <mapping resource="logic/Book.hbm.xml"/>
+        <mapping resource="logic/Client.hbm.xml"/>
+        <mapping resource="logic/Cover.hbm.xml"/>
+        <mapping resource="logic/Genre.hbm.xml"/>
+        <mapping resource="logic/Order.hbm.xml"/>
+        <mapping resource="logic/OrderJournal.hbm.xml"/>
+        <mapping resource="logic/Status.hbm.xml"/>
+
+    </session-factory>
+  
+</hibernate-configuration>

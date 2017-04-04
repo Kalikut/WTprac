@@ -1,0 +1,18 @@
+<hibernate-mapping>
+    <class name="logic.Client" table="client">
+        <id column="client_id" name="id" type="long">
+            <generator class="increment"/>
+        </id>
+        <property column="first_name" name="first_name" type="java.lang.String"/>
+        <property column="middle_name" name="middle_name" type="java.lang.String"/>
+        <property column="last_name" name="last_name" type="java.lang.String"/>
+        <property column="adress" name="adress" type="java.lang.String"/>
+        <property column="phone_number" name="phone_number" type="java.lang.String"/>
+        <property column="e_mail" name="e_mail" type="java.lang.String"/>
+        <property column="password" name="password" type="java.lang.String"/>
+        <set name="order" lazy="false">
+            <key column="client_id"/>
+            <one-to-many class="logic.Order"/>
+        </set>
+    </class>
+</hibernate-mapping>
