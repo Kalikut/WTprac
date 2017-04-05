@@ -10,6 +10,7 @@ import java.util.List;
 
 import util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.Query;
 
 public class GenreDAOImpl implements GenreDAO {
 
@@ -29,6 +30,22 @@ public class GenreDAOImpl implements GenreDAO {
         List genres = new ArrayList<Genre>();
         session = HibernateUtil.getSessionFactory().openSession();
         genres = session.createCriteria(Genre.class).list();
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+        return genres;
+    }
+
+    public Collection getGenreByName(String genre_name) throws SQLException {
+        Session session = null;
+        List genres = new ArrayList<Genre>();
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery(
+                " from Genre g where g.genre_name like :name "
+        ).setString("name", '%' + genre_name + '%');
+        genres = (List<Genre>) query.list();
+        session.getTransaction().commit();
         if (session != null && session.isOpen()) {
             session.close();
         }
